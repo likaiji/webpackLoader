@@ -1,39 +1,41 @@
 var htmlwebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    // entry: __dirname + "/src/script/main.js",
-    entry: {
-        main: __dirname + "/src/script/main.js",
-        a: __dirname + "/src/script/a.js",
-        b: __dirname + "/src/script/b.js",
-        c: __dirname + "/src/script/c.js"
-    },
+    entry: __dirname + "/src/app.js",
     output: {
         path: __dirname + "/dist",
-        filename: "js/[name]-[chunkhash].js",
-        publicPath: "http://likaiji.com"
+        filename: "js/[name].bundle.js"
+    },
+    module:{
+        loaders:[
+            {
+                test:/\.js$/,
+                loader:'babel-loader',
+                query:{
+                    presets:['env']
+                }
+            },
+            {
+                test:/\.html$/,
+                loader:'html-loader'
+            },
+            {
+                test:/\.css$/,
+                loader:'style-loader!css-loader'
+            }
+        ]
     },
     plugins: [
         new htmlwebpackPlugin({
-            filename: "a.html", //指定生成的文件名
+            filename: "index.html", //指定生成的文件名
             template: "index.html", //默认执行根目录下的index.html
-            inject: false, //不指定生成的srcipt文件位置
-            title: "webpack is a.html", // 传递参数
-            excludeChunks: ['b', 'c'] // 排除b c这两个Chunks
-        }),
-        new htmlwebpackPlugin({
-            filename: "b.html", //指定生成的文件名
-            template: "index.html", //默认执行根目录下的index.html
-            inject: false, //不指定生成的srcipt文件位置
-            title: "webpack is b.html", // 传递参数
-            excludeChunks: ['a', 'c'] // 排除a c这两个Chunks
-        }),
-        new htmlwebpackPlugin({
-            filename: "c.html", //指定生成的文件名
-            template: "index.html", //默认执行根目录下的index.html
-            inject: false, //不指定生成的srcipt文件位置
-            title: "webpack is c.html", // 传递参数
-            excludeChunks: ['a', 'b'] // 排除a b这两个Chunks
+            inject: 'body', //指定生成的srcipt文件位置
         })
-    ]
+    ],
+    devServer:{
+        contentBase:'./dist', //本地服务器加载的页面所在的目录
+        historyApiFallback:true,//不跳转
+        inline:true, //实时刷新
+        port:'8080' //端口
+    }
 }
