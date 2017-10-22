@@ -6,23 +6,27 @@ module.exports = {
         path: __dirname + "/dist",
         filename: "js/[name].bundle.js"
     },
-    module:{
-        loaders:[
-            {
-                test:/\.js$/,
-                loader:'babel-loader',
-                query:{
-                    presets:['env']
+    module: {
+        loaders: [{
+                test: /\.js$/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['env']
                 }
             },
             {
-                test:/\.html$/,
-                loader:'html-loader'
+                test: /\.html$/,
+                loader: 'html-loader'
             },
             {
-                test:/\.css$/,
-                loader:'style-loader!css-loader'
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            },
+            {
+                test: /\.less$/,
+                loader: 'style-loader!css-loader!less-loader'
             }
+
         ]
     },
     plugins: [
@@ -32,10 +36,10 @@ module.exports = {
             inject: 'body', //指定生成的srcipt文件位置
         })
     ],
-    devServer:{
-        contentBase:'./dist', //本地服务器加载的页面所在的目录
-        historyApiFallback:true,//不跳转
-        inline:true, //实时刷新
-        port:'8080' //端口
+    devServer: {
+        contentBase: './dist', //本地服务器加载的页面所在的目录
+        historyApiFallback: true, //不跳转
+        inline: true, //实时刷新
+        port: '8080' //端口
     }
 }
