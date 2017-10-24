@@ -1,4 +1,4 @@
-var htmlwebpackPlugin = require('html-webpack-plugin')
+// var htmlwebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: __dirname + "/src/app.js",
@@ -25,8 +25,11 @@ module.exports = {
             {
                 test: /\.less$/,
                 loader: 'style-loader!css-loader!less-loader'
+            },
+            {
+                test: /\.html$/,
+                loader: 'html-loader'
             }
-
         ]
     },
     plugins: [
