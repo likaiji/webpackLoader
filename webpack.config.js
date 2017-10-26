@@ -29,16 +29,23 @@ module.exports = {
             {
                 test: /\.html$/,
                 loader: 'html-loader'
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                loaders: [
+                    'url-loader?limit=4000&name=images/[name]-[hash:5].[ext]',
+                    'image-webpack-loader'
+                ]
             }
         ]
     },
-    plugins: [
-        new htmlwebpackPlugin({
-            filename: "index.html", //指定生成的文件名
-            template: "index.html", //默认执行根目录下的index.html
-            inject: 'body', //指定生成的srcipt文件位置
-        })
-    ],
+    // plugins: [
+    //     new htmlwebpackPlugin({
+    //         filename: "index.html", //指定生成的文件名
+    //         template: "index.html", //默认执行根目录下的index.html
+    //         inject: 'body', //指定生成的srcipt文件位置
+    //     })
+    // ],
     devServer: {
         contentBase: './dist', //本地服务器加载的页面所在的目录
         historyApiFallback: true, //不跳转
